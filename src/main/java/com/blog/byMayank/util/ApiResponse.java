@@ -11,6 +11,6 @@ public class ApiResponse {
 
     private String message;
     private boolean status;
-    private String serviceName;
+    private String controllerName;
     private Object data;
 }
