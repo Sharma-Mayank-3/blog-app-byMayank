@@ -1,6 +1,7 @@
 package com.blog.byMayank.controller;
 
 import com.blog.byMayank.dto.PostDto;
+import com.blog.byMayank.dto.PostResponse;
 import com.blog.byMayank.service.PostService;
 import com.blog.byMayank.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,17 @@ public class PostController {
     ){
         List<PostDto> postDtos = this.postService.searchByKeyword(keyword);
         return new ResponseEntity<>(new ApiResponse("all post by keyword", true, "post-service", postDtos), HttpStatus.OK);
+    }
+
+    @GetMapping("/allPosts")
+    public ResponseEntity<ApiResponse> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "1", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir
+    ){
+        PostResponse allPostsByPageNumberandSize = this.postService.getAllPostsByPageNumberandSize(pageNumber, pageSize, sortBy, dir);
+        return new ResponseEntity<>(new ApiResponse("all post by page number and size", true, "post-service", allPostsByPageNumberandSize), HttpStatus.OK);
     }
 
 }

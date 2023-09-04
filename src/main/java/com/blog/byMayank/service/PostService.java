@@ -1,6 +1,7 @@
 package com.blog.byMayank.service;
 
 import com.blog.byMayank.dto.PostDto;
+import com.blog.byMayank.dto.PostResponse;
 
 import java.util.List;
 
@@ -21,5 +22,7 @@ public interface PostService {
     List<PostDto> getAllPostByCategory(int categoryId);
 
     List<PostDto> searchByKeyword(String keyword);
+
+    PostResponse getAllPostsByPageNumberandSize(int pageNumber, int pageSize, String sortBy, String dir);
 
 }
