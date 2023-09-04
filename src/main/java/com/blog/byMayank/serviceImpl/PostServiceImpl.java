@@ -1,6 +1,7 @@
 package com.blog.byMayank.serviceImpl;
 
 import com.blog.byMayank.dto.PostDto;
+import com.blog.byMayank.dto.PostResponse;
 import com.blog.byMayank.entity.Category;
 import com.blog.byMayank.entity.Post;
 import com.blog.byMayank.entity.User;
@@ -11,6 +12,10 @@ import com.blog.byMayank.repository.UserRepo;
 import com.blog.byMayank.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -94,5 +99,23 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> searchByKeyword(String keyword) {
         List<Post> posts = this.postRepo.searchByKeyword(keyword);
         return posts.stream().map(post->this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostResponse getAllPostsByPageNumberandSize(int pageNumber, int pageSize, String sortBy, String dir) {
+        Pageable p = dir.equalsIgnoreCase("ascending") ? PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).ascending()) : PageRequest.of(pageNumber, pageSize, Sort.by(sortBy).descending());
+
+        Page<Post> all = this.postRepo.findAll(p);
+        PostResponse postResponse = new PostResponse();
+        List<Post> content = all.getContent();
+        List<PostDto> collect = content.stream().map(post -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+        postResponse.setPostDtos(collect);
+        postResponse.setPageNumber(all.getNumber());
+        postResponse.setPageSize(all.getSize());
+        postResponse.setTotalElement(all.getTotalElements());
+        postResponse.setTotalPages(all.getTotalPages());
+        postResponse.setLastPage(all.isLast());
+
+        return postResponse;
     }
 }
