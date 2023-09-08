@@ -33,3 +33,40 @@
 # FetchType.EAGER :
 1. if we delete parent(user) the child(post) will get delete.
 2. if we try to delete child then child will "not" get delete also the parent.
+
+
+
+
+# Spring Security
+
+# Pom Dependency
+1. <dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-security</artifactId>
+   <version>3.1.3</version>
+   </dependency>
+
+Note : With this a password is generated in console and userName is user, one can do form based authentation using user and password to access the request.  
+or if define the below properties in application file, then use this username and password to do the form based login.
+# userName, Password and Role already defined in application.properties file.
+1. spring.security.user.name=mayank
+2. spring.security.user.password=password
+3. spring.security.user.roles=USER,ADMIN
+
+Note : "we are not interested in this above form based, we need to pass it in postman."
+
+For this disable the form based and get the basic auth, means comment the application properties new changes 
+and create a class "SecurityConfig", have a look at the class SecurityConfig SecurityFilterChain method.
+
+# Take the username password and role from DB.
+
+# Create Entity Role
+Define many to many relation bewteen role and user.
+1. create bean AuthenticationManager
+2. bean DaoAuthenticationProvider
+3. bean PasswordEncoder
+4. create class CustomUserDeatilsService and get the user by userName from userRepo.
+5. implement CustomUserDeatilsService class with UserDetailsService.
+6. User class implement with UserDetails and see the changes.
+7. now go with basic auth, pass userName and password to access the api's
+8. NOTE : "POST and PUT and DELETE api's cant be accessed by this above" 
