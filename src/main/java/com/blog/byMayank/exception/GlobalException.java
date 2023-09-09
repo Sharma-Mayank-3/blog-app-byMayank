@@ -13,4 +13,9 @@ public class GlobalException {
     public ResponseEntity<ApiResponse> resourceNotFoundException(ResourceNotFoundException ex){
         return new ResponseEntity<>(new ApiResponse("exception occours", false, "user-service", ex.getMessage()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse> jwtException(JwtException ex){
+        return new ResponseEntity<>(new ApiResponse("jwt exception", false, "user-service", ex.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
 }

@@ -1,18 +1,17 @@
 package com.blog.byMayank.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+@Builder
+public class JwtAuthResponse {
 
-    private int userId;
-
+    private String token;
     private String userName;
-    private int userAge;
-    private String password;
 
 }
