@@ -7,6 +7,7 @@ import com.blog.byMayank.repository.UserRepo;
 import com.blog.byMayank.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +22,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = this.modelMapper.map(userDto, User.class);
+        user.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
         User savedUser = this.userRepo.save(user);
         return this.modelMapper.map(savedUser, UserDto.class);
     }

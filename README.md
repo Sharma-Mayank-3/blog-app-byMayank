@@ -61,7 +61,7 @@ and create a class "SecurityConfig", have a look at the class SecurityConfig Sec
 # Take the username password and role from DB.
 
 # Create Entity Role
-Define many to many relation bewteen role and user.
+Define many to many relation between role and user.
 1. create bean AuthenticationManager
 2. bean DaoAuthenticationProvider
 3. bean PasswordEncoder
@@ -70,3 +70,31 @@ Define many to many relation bewteen role and user.
 6. User class implement with UserDetails and see the changes.
 7. now go with basic auth, pass userName and password to access the api's
 8. NOTE : "POST and PUT and DELETE api's cant be accessed by this above" 
+
+
+# JWT Authentication
+1. we want to create a token and with that token only all the api's should be accessible.
+2. remove basic auth from SecurityConfig and follow 8 steps of JWT.
+
+# 8 steps of JWT.
+1. include 2 dependencies
+
+   <dependency>
+   <groupId>io.jsonwebtoken</groupId>
+   <artifactId>jjwt</artifactId>
+   <version>0.9.1</version>
+   </dependency>
+
+   	<dependency>
+   		<groupId>javax.xml.bind</groupId>
+   		<artifactId>jaxb-api</artifactId>
+   		<version>2.3.1</version>
+   	</dependency>
+
+2. Inside security package create 3 class
+ a. JwtAuthentationEntryPoint
+ b. JwtAuthentationFilter
+ c. JwtTokenHelper
+3. make changes in SecurityConfig class see it.
+4. create a AuthController and it can be access normally.
+5. define some JwtException.
