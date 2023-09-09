@@ -6,6 +6,8 @@ import com.blog.byMayank.security.JwtAuthentationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -58,7 +60,13 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .cors(cors-> cors.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/blog-app/v1/auth/login").permitAll().requestMatchers("/blog-app/user/create").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/blog-app/v1/auth/login").permitAll()
+                        .requestMatchers("/blog-app/user/create").permitAll()
+                        .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                        .requestMatchers("/blog-app/admin").hasRole("ADMIN")
+                        .requestMatchers("/blog-app/normal").hasRole("NORMAL")
+                        .requestMatchers("/blog-app/about").permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthentationEntryPoint))
                         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 //

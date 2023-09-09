@@ -40,11 +40,11 @@
 # Spring Security
 
 # Pom Dependency
-1. <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-security</artifactId>
-   <version>3.1.3</version>
-   </dependency>
+1.     <dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-security</artifactId>
+       <version>3.1.3</version>
+       </dependency>
 
 Note : With this a password is generated in console and userName is user, one can do form based authentation using user and password to access the request.  
 or if define the below properties in application file, then use this username and password to do the form based login.
@@ -79,11 +79,11 @@ Define many to many relation between role and user.
 # 8 steps of JWT.
 1. include 2 dependencies
 
-   <dependency>
-   <groupId>io.jsonwebtoken</groupId>
-   <artifactId>jjwt</artifactId>
-   <version>0.9.1</version>
-   </dependency>
+       <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.9.1</version>
+        </dependency>
 
    	<dependency>
    		<groupId>javax.xml.bind</groupId>
@@ -98,3 +98,22 @@ Define many to many relation between role and user.
 3. make changes in SecurityConfig class see it.
 4. create a AuthController and it can be access normally.
 5. define some JwtException.
+
+# Authorization || Role based Authentication
+# we want to delete user only by admin.
+use this in SecurityConfig
+
+     .authorizeHttpRequests(auth -> auth.requestMatchers("/blog-app/v1/auth/login").permitAll()
+     .requestMatchers("/blog-app/user/create").permitAll()
+     .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+     .requestMatchers("/blog-app/admin").hasRole("ADMIN")
+     .requestMatchers("/blog-app/normal").hasRole("NORMAL")
+     .requestMatchers("/blog-app/about").permitAll()
+     //                        .requestMatchers("/blog-app/normal").hasRole("ADMIN")
+     .anyRequest().authenticated())
+
+# NOTE : 
+1.    USER mayank password : "xyz", has ADMIN role
+2.    User hello password : "hello" has NORMAL role 
+
+
