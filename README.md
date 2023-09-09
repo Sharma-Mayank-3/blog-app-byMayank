@@ -116,4 +116,16 @@ use this in SecurityConfig
 1.    USER mayank password : "xyz", has ADMIN role
 2.    User hello password : "hello" has NORMAL role 
 
+# Swagger
+1. Just Include this dependency
+
+       <dependency>
+         <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+         <version>2.1.0</version>
+       </dependency>
+
+2. add @OpenAPIDefinition(info = @Info(title = "Blog APIS", version = "0.0.1", description = "Blog Service Api's"))
+   in the mail class.
+
 
