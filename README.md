@@ -128,4 +128,28 @@ use this in SecurityConfig
 2. add @OpenAPIDefinition(info = @Info(title = "Blog APIS", version = "0.0.1", description = "Blog Service Api's"))
    in the mail class.
 
+# Swagger with JWT 
+1. create class swaggerConfig 
+2. Comment that @OpenAPIDefinition in spring boot main app
+      
+         @Bean
+         public OpenAPI openAPI() {
+         return new OpenAPI().addSecurityItem(new SecurityRequirement().
+         addList("Bearer Authentication"))
+         .components(new Components().addSecuritySchemes
+         ("Bearer Authentication", createAPIKeyScheme()))
+         .info(new Info().title("Blog App")
+         .description("blog application all api")
+         .version("1.0").contact(new Contact().name("by-Mayank")
+         .email( "email to mayank").url("s.mayank.iit@gmail.com"))
+         .license(new License().name("License of API")
+         .url("API license URL")));
+         }
+      
+         private SecurityScheme createAPIKeyScheme() {
+         return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+         .bearerFormat("JWT")
+         .scheme("bearer");
+         }
+
 

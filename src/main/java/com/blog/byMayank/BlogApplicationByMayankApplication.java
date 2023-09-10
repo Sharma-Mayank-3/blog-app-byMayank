@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Blog APIS", version = "0.0.1", description = "Blog Service Api's"))
+//@OpenAPIDefinition(info = @Info(title = "Blog APIS", version = "0.0.1", description = "Blog Service Api's"))
 public class BlogApplicationByMayankApplication implements CommandLineRunner {
 
 	@Autowired
