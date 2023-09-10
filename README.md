@@ -151,5 +151,14 @@ use this in SecurityConfig
          .bearerFormat("JWT")
          .scheme("bearer");
          }
+   3. Permit all in securityConfig
+   
+            public static final String[] URL = {
+            "/api/v1/auth/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+            };
 
 
